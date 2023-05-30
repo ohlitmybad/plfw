@@ -43,6 +43,13 @@ body.dark-mode .tooltip {
   font-size: 12px;
 }
 
+
+
+ body.dark-mode #search-bar {
+    color: #000; /* Specify the desired text color for dark mode */
+background-color : #999
+  }
+
   body.dark-mode svg .x-label {
     /* Override SVG text color */
     fill: #f2f2f2;
@@ -143,6 +150,12 @@ body.dark-mode .toggle-slider {
 
 body.dark-mode input:checked + .toggle-slider:before {
   background-color: #ccc; /* Darker background color for dark mode */
+}
+
+
+circle.highlighted {
+  stroke: #ff00ff;
+  stroke-width: 3px;
 }
 
 
@@ -406,8 +419,7 @@ width: 120px;
   box-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px;
 }
 
-	
-	.button-9 {
+.button-9 {
   align-items: center;
   background-color: #F9F9F9;
   border-radius: 25px;
@@ -442,7 +454,6 @@ width: 120px;
 .button-9:hover {
   box-shadow: rgba(0, 0, 0, 0.4) 3px 3px 3px;
 }
-
 
 .button-8 {
   align-items: center;
@@ -480,6 +491,15 @@ width: 120px;
 }
 
 
+#search-bar {
+    position: absolute;
+    top: 726px; /* Adjust the desired top position */
+    left: 730px; /* Adjust the desired left position */
+  }
+
+  #search-bar::placeholder {
+    color: #fff; /* Specify the desired color for the placeholder text */
+  }
 </style>
 	
 </head>
@@ -493,13 +513,13 @@ width: 120px;
   gtag('config', 'G-PSBMXX80EF');
 </script>
 
-
-
 <body>
-<div class="dark-mode-toggle" onclick="toggleDarkMode()">
+	
+	<div class="dark-mode-toggle" onclick="toggleDarkMode()">
     <div class="toggle-icon"></div>
   </div>
-	<svg id="scatter-plot"></svg>
+<svg id="scatter-plot"></svg>
+<input type="text" id="search-bar" placeholder="Search player...">
 <script>
   var csvData = `ID,Player,Minutes played,Duels per 90,Duels won %,Successful defensive actions per 90,Defensive duels per 90,Defensive duels won %,Aerial duels per 90,Aerial duels won %,PAdj Sliding tackles,PAdj Interceptions,Fouls per 90,Successful attacking actions per 90,Goals per 90,Non-penalty goals per 90,xG per 90,Head goals per 90,Shots per 90,Shots on target %,Goal conversion %,Assists per 90,Crosses per 90,Accurate crosses %,Dribbles per 90,Successful dribbles %,Offensive duels per 90,Offensive duels won %,Touches in box per 90,Progressive runs per 90,Accelerations per 90,Received passes per 90,Received long passes per 90,Fouls suffered per 90,Passes per 90,Accurate passes %,Forward passes per 90,Accurate forward passes %,Short / medium passes per 90,Accurate short / medium passes %,Long passes per 90,Accurate long passes %,xA per 90,Shot assists per 90,Second assists per 90,Third assists per 90,Smart passes per 90,Accurate smart passes %,Key passes per 90,Passes to final third per 90,Accurate passes to final third %,Passes to penalty area per 90,Accurate passes to penalty area %,Through passes per 90,Accurate through passes %,Deep completions per 90,Deep completed crosses per 90,Progressive passes per 90,Accurate progressive passes %,Direct free kicks per 90,Direct free kicks on target %,Penalties taken,Penalty conversion %
 1,H. Wilson,995,16.1,44.38,6.33,4.43,65.31,1.81,20,0.44,3.78,0.81,2.26,0.18,0.18,0.19,0,1.36,33.33,13.333,0.18,1.54,11.76,2.98,48.48,7.69,42.35,2.17,0.99,0.63,21.17,1.63,2.08,28.13,80.71,6.06,62.69,24.78,85.77,1.9,66.67,0.03,0.45,0,0,0.27,66.67,0.45,1.72,68.42,1.99,36.36,0.18,50,0.99,0.27,3.53,69.23,0,0,0,0
@@ -586,6 +606,7 @@ width: 120px;
 83,Mohamed Salah,3268,17.6,33.02,2.59,2.42,54.55,1.02,13.51,0.04,1.97,0.52,4.24,0.52,0.47,0.5,0.03,2.84,40.78,18.447,0.19,1.54,41.07,3.86,47.14,10.55,32.9,5.48,2.45,0.96,23.82,3.36,0.85,28.5,79.61,6.22,68.14,26.05,82.56,0.96,60,0.17,1.35,0.22,0.03,1.35,46.94,0.72,1.9,71.01,3.44,58.4,1.54,42.86,2.23,0.66,3.91,88.03,0.06,0,4,50
 84,J. Bowen,3370,21.18,40.61,5.9,4.41,53.33,3.42,27.34,0.51,3.25,0.72,3.82,0.13,0.11,0.24,0,1.76,27.27,7.576,0.11,2.54,24.21,4.38,57.93,10.18,41.99,3.31,2.35,0.96,12.77,1.58,1.76,18.83,73.48,4.97,65.05,15.3,82.72,1.12,52.38,0.19,1.18,0.03,0.03,0.43,43.75,0.53,1.42,71.7,1.76,53.03,0.43,31.25,0.72,0.56,2.91,66.97,0.03,0,2,50
 85,A. Iwobi,3401,15.3,45.33,6.14,5.21,62.94,1.24,31.91,0.13,3.34,0.5,3.23,0.05,0.05,0.09,0,0.95,36.11,5.556,0.19,2.41,35.16,3.04,53.04,6.77,38.67,1.32,1.8,1.01,24.72,1.03,0.34,35.94,79.31,10.64,71.39,30.25,85.39,3.41,55.04,0.13,1.22,0.03,0.05,0.95,44.44,0.77,5.58,70.14,3.49,50.76,1.35,43.14,1.19,0.82,6.99,79.55,0,0,0,0`;
+
 
   var rows = csvData.trim().split('\n');
   var header = rows[0].split(',');
@@ -708,7 +729,7 @@ tooltip.style("position", "absolute")
   .style("border-radius", "5px")
   .style("padding", "10px")
   .style("font-size", "12px");
-
+	
 	document.addEventListener('touchstart', function(event) {
   // Check if the touch event target is the tooltip or one of its child elements
   if (!tooltip.contains(event.target)) {
@@ -716,10 +737,27 @@ tooltip.style("position", "absolute")
     tooltip.style.display = 'none';
   }
 });
-	
-	
+
 var names = rows.slice(1).map(function(row) {
   return row.split(',')[1];
+});
+
+var searchBar = document.getElementById("search-bar");
+
+searchBar.addEventListener("input", function() {
+  var searchTerm = searchBar.value.toLowerCase();
+
+  if (searchTerm === '') {
+    resetSearch();
+    return;
+  }
+
+  circles.classed("highlighted", false);
+
+  circles.filter(function(d, i) {
+      return names[i].toLowerCase().includes(searchTerm);
+    })
+    .classed("highlighted", true);
 });
 
 
@@ -826,6 +864,10 @@ yScale.domain(d3.extent(data, function(d) { return d[header.indexOf(yMetric)]; }
 }
 
 
+function resetSearch() {
+  searchBar.value = '';
+  circles.classed("highlighted", false);
+}
 
 
 </script>
